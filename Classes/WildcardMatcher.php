@@ -72,8 +72,14 @@
 
                 $pattern = substr($pattern, $position + 1);
 
-                // no repeating of "*" token - ignore them
-                if (($token === $previousToken) && (WildcardToken::ANY_OF_CHARACTERS === $token)) {
+                // 1. no repeating token (**)
+                // 2. no combination of token (*?)
+                // 3. no combination of token (?*)
+                if (
+                    (($token === $previousToken) && (WildcardToken::ANY_OF_CHARACTERS === $token))
+                    || ((WildcardToken::ANY_OF_CHARACTERS === $previousToken) && (WildcardToken::ANY_CHARACTER === $token))
+                    || ((WildcardToken::ANY_CHARACTER === $previousToken) && (WildcardToken::ANY_OF_CHARACTERS === $token))
+                ) {
                     throw new InvalidCharacterForWildcardPattern($pattern);
                 }
 

@@ -1,5 +1,6 @@
 <?php namespace JayBeeR\Flops\Tests {
 
+    use JayBeeR\Flops\Failures\InvalidCharacterForWildcardPattern;
     use JayBeeR\Flops\WildcardMatcher;
     use PHPUnit\Framework\TestCase;
 
@@ -22,6 +23,7 @@
         {
             return [
                 ['s', '?', true],
+                ['s', '*', true],
                 ['search phrase', '*', true],
                 ['search phrase', '*phrase', true],
                 ['search phrase', 'search*', true],
@@ -48,6 +50,9 @@
                 ['search phrase', '?ea??ch**ph?a*e', false],
 
                 // Escape characters
+                ['?', '\\?', true],
+                ['*', '\\*', true],
+                ['\\', '\\\\', true],
                 ['search phrase?', '*\\?', true],
                 ['?search phrase?', '\\?*', true],
                 ['search\\phrase', '*\\\\*', true],
@@ -61,10 +66,24 @@
         }
 
         /**
+         * @return array
+         */
+        public function wildcardVariantsWithExceptionsProvider()
+        {
+            return [
+                ['search phrase', '?*'],
+                ['search phrase', '*?'],
+                ['search phrase', '**']
+            ];
+        }
+
+        /**
          * @param string $subject
          * @param string $pattern
-         *
          * @param bool $valid
+         *
+         * @throws InvalidCharacterForWildcardPattern
+         *
          * @dataProvider wildcardVariantsProvider
          * @test
          */
@@ -73,6 +92,22 @@
             $result = $this->subject->hasWildcardMatch($subject, $pattern);
 
             $this->assertEquals($valid, $result);
+        }
+
+        /**
+         * @param string $subject
+         * @param string $pattern
+         * @param bool $valid
+         *
+         * @throws InvalidCharacterForWildcardPattern
+         *
+         * @dataProvider wildcardVariantsWithExceptionsProvider
+         * @test
+         */
+        public function hasWildcardMatchThrowsException(string $subject, string $pattern)
+        {
+            $this->expectException(InvalidCharacterForWildcardPattern::class);
+            $this->subject->hasWildcardMatch($subject, $pattern);
         }
     }
 }
