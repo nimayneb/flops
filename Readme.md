@@ -29,6 +29,8 @@ Table of contents
 1. [File information](Documentation/FileInformation.md)
 1. [Directory information](Documentation/DirectoryInformation.md)
 1. [Symbolic link information](Documentation/SymbolicLinkInformation.md)
+1. [File resources](Documentation/FileResources.md)
+1. [File encoding](Documentation/FileEncoding.md)
 1. [Permissions](Documentation/Permissions.md)
 1. [Root line](Documentation/RootLine.md)
 1. [Write content](Documentation/WriteContent.md)
