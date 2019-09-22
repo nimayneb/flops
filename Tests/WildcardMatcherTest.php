@@ -7,9 +7,9 @@
     class WildcardMatcherTest extends TestCase
     {
         /**
-         * @var WildcardMatcher
+         * @var WildcardMatcher|object
          */
-        protected $subject;
+        protected object $subject;
 
         public function setUp(): void
         {
@@ -24,6 +24,10 @@
             return [
                 ['s', '?', true],
                 ['s', '*', true],
+                ['s', '??', false],
+                ['ss', '*', true],
+                ['', '*', false],
+
                 ['search phrase', '*', true],
                 ['search phrase', '*phrase', true],
                 ['search phrase', 'search*', true],

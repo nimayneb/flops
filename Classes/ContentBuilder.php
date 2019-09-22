@@ -3,7 +3,7 @@
     use Closure;
     use Generator;
     use JayBeeR\Flops\Failures\CannotReadContentFromFile;
-    use JayBeeR\Flops\Failures\FailedFileOpen;
+    use JayBeeR\Flops\Failures\CannotOpenFile;
     use JayBeeR\Flops\Failures\UnexpectedAvailableContent;
 
     class ContentBuilder extends Reference
@@ -37,7 +37,7 @@
         /**
          * @param int $length
          *
-         * @throws FailedFileOpen
+         * @throws CannotOpenFile
          */
         public function truncate(int $length = 0)
         {
@@ -47,7 +47,7 @@
                 ftruncate($resource, $length);
                 fclose($resource);
             } else {
-                throw new FailedFileOpen($this->reference);
+                throw new CannotOpenFile($this->reference);
             }
         }
 
@@ -63,7 +63,7 @@
          * @param Closure|Generator $generatorHandler
          * @param string $mode
          *
-         * @throws FailedFileOpen
+         * @throws CannotOpenFile
          */
         public function writeContent(Closure $generatorHandler, string $mode): void
         {
@@ -76,7 +76,7 @@
 
                 fclose($resource);
             } else {
-                throw new FailedFileOpen($this->reference);
+                throw new CannotOpenFile($this->reference);
             }
         }
 
@@ -90,7 +90,7 @@
          *      }
          *
          * @return Generator|string[]
-         * @throws FailedFileOpen
+         * @throws CannotOpenFile
          * @throws UnexpectedAvailableContent
          */
         public function readContent()
@@ -108,14 +108,14 @@
 
                 fclose($resource);
             } else {
-                throw new FailedFileOpen($this->reference);
+                throw new CannotOpenFile($this->reference);
             }
         }
 
         /**
          * @param Closure $generatorHandler
          *
-         * @throws FailedFileOpen
+         * @throws CannotOpenFile
          */
         public function newContent(Closure $generatorHandler)
         {
@@ -125,7 +125,7 @@
         /**
          * @param Closure $generatorHandler
          *
-         * @throws FailedFileOpen
+         * @throws CannotOpenFile
          */
         public function addContent(Closure $generatorHandler)
         {

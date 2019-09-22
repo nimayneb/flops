@@ -22,9 +22,9 @@
                     break;
                 }
 
-                if (WildcardToken::ANY_CHARACTER === $token) {
+                if (WildcardToken::ONE_CHARACTER === $token) {
                     $subject = substr($subject, 1);
-                } elseif (WildcardToken::ANY_OF_CHARACTERS === $token) {
+                } elseif (WildcardToken::ZERO_OR_MANY_CHARACTERS === $token) {
                     $anyLength = true;
                 } else {
                     if (
@@ -72,13 +72,13 @@
 
                 $pattern = substr($pattern, $position + 1);
 
-                // 1. no repeating token (**)
-                // 2. no combination of token (*?)
+                // 1. no repeating token (**) TODO: 1-x
+                // 2. no combination of token (*?) TODO: 0-1
                 // 3. no combination of token (?*)
                 if (
-                    (($token === $previousToken) && (WildcardToken::ANY_OF_CHARACTERS === $token))
-                    || ((WildcardToken::ANY_OF_CHARACTERS === $previousToken) && (WildcardToken::ANY_CHARACTER === $token))
-                    || ((WildcardToken::ANY_CHARACTER === $previousToken) && (WildcardToken::ANY_OF_CHARACTERS === $token))
+                    (($token === $previousToken) && (WildcardToken::ZERO_OR_MANY_CHARACTERS === $token))
+                    || ((WildcardToken::ZERO_OR_MANY_CHARACTERS === $previousToken) && (WildcardToken::ONE_CHARACTER === $token))
+                    || ((WildcardToken::ONE_CHARACTER === $previousToken) && (WildcardToken::ZERO_OR_MANY_CHARACTERS === $token))
                 ) {
                     throw new InvalidCharacterForWildcardPattern($pattern);
                 }
@@ -119,8 +119,8 @@
         {
             $positions = array_filter(
                 [
-                    strpos($pattern, WildcardToken::ANY_OF_CHARACTERS),
-                    strpos($pattern, WildcardToken::ANY_CHARACTER),
+                    strpos($pattern, WildcardToken::ZERO_OR_MANY_CHARACTERS),
+                    strpos($pattern, WildcardToken::ONE_CHARACTER),
                     strpos($pattern, WildcardToken::ESCAPE_CHAR)
                 ],
                 fn ($value) => false !== $value

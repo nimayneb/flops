@@ -2,7 +2,7 @@
 
     use JayBeeR\Flops\Application;
 
-    class FailedFileOpen extends Application
+    class CannotOpenFile extends Application
     {
     }
 }
