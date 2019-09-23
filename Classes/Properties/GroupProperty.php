@@ -1,5 +1,10 @@
 <?php namespace JayBeeR\Flops\Properties {
 
+    /*
+     * This file belongs to the package "nimayneb.flops".
+     * See LICENSE.txt that was shipped with this package.
+     */
+
     use JayBeeR\Flops\Failures\CannotGetGroup;
     use JayBeeR\Flops\Failures\CannotSetGroup;
     use JayBeeR\Flops\Failures\UnsupportedOperation;

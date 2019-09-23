@@ -1,5 +1,10 @@
 <?php namespace JayBeeR\Flops\Charsets {
 
+    /*
+     * This file belongs to the package "nimayneb.flops".
+     * See LICENSE.txt that was shipped with this package.
+     */
+
     /**
      *  UTF-8 - 8-Bit Universal Coded Character Set (UCS) Transformation Format
      *  =======================================================================

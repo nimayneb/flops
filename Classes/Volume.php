@@ -1,5 +1,10 @@
 <?php namespace JayBeeR\Flops {
 
+    /*
+     * This file belongs to the package "nimayneb.flops".
+     * See LICENSE.txt that was shipped with this package.
+     */
+
     class Volume extends Reference
     {
         public function getFreeSpace(): float

@@ -1,5 +1,10 @@
 <?php namespace JayBeeR\Flops {
 
+    /*
+     * This file belongs to the package "nimayneb.flops".
+     * See LICENSE.txt that was shipped with this package.
+     */
+
     use Generator;
     use JayBeeR\Flops\Failures\InvalidCharacterForWildcardPattern;
 

@@ -1,5 +1,10 @@
 <?php namespace JayBeeR\Flops\RootLines {
 
+    /*
+     * This file belongs to the package "nimayneb.flops".
+     * See LICENSE.txt that was shipped with this package.
+     */
+
     use JayBeeR\Flops\Failures\InvalidReferenceForEnvironment;
     use JayBeeR\Flops\Failures\ReferenceIsNotDirectory;
     use JayBeeR\Flops\Failures\ReferenceIsNotSubDirectory;

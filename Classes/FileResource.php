@@ -1,5 +1,10 @@
 <?php namespace JayBeeR\Flops {
 
+    /*
+     * This file belongs to the package "nimayneb.flops".
+     * See LICENSE.txt that was shipped with this package.
+     */
+
     use JayBeeR\Flops\Charsets\Encoding;
     use JayBeeR\Flops\Charsets\Utf8;
     use JayBeeR\Flops\Failures\ReferenceNotFound;

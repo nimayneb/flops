@@ -1,5 +1,10 @@
 <?php namespace JayBeeR\Flops\Constraints {
 
+    /*
+     * This file belongs to the package "nimayneb.flops".
+     * See LICENSE.txt that was shipped with this package.
+     */
+
     use JayBeeR\Flops\FileReference;
     use JayBeeR\Flops\Properties\AccessTimeProperty;
     use JayBeeR\Flops\Properties\ChangeInodeTimeProperty;

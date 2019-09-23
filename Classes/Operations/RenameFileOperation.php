@@ -1,5 +1,10 @@
 <?php namespace JayBeeR\Flops\Operations {
 
+    /*
+     * This file belongs to the package "nimayneb.flops".
+     * See LICENSE.txt that was shipped with this package.
+     */
+
     use JayBeeR\Flops\Failures\CannotRenameFile;
     use JayBeeR\Flops\Failures\CannotRenameToExistingFileName;
     use JayBeeR\Flops\Failures\InvalidCharacterForFileExtension;

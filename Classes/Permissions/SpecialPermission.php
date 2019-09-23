@@ -1,5 +1,10 @@
 <?php namespace JayBeeR\Flops\Permissions {
 
+    /*
+     * This file belongs to the package "nimayneb.flops".
+     * See LICENSE.txt that was shipped with this package.
+     */
+
     use JayBeeR\Flops\Operations\FlushOperation;
     use JayBeeR\Flops\Properties\ReferenceProperty;
     use JayBeeR\Flops\ReferenceObject;
