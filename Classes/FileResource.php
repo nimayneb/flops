@@ -7,9 +7,12 @@
     use JayBeeR\Flops\Failures\CannotReadBytesFromFile;
     use JayBeeR\Flops\Failures\CannotSeekToPosition;
     use JayBeeR\Flops\Failures\InvalidZeroLengthForReading;
+    use JayBeeR\Flops\Properties\ReferenceProperty;
 
     class FileResource
     {
+        use ReferenceProperty;
+
         /**
          * @var resource
          */
@@ -17,24 +20,22 @@
 
         protected Encoding $encoding;
 
-        protected string $file;
-
         /**
-         * @param string $file
+         * @param string $reference
          * @param Encoding $encoding
          *
          * @throws CannotOpenFile
          */
-        protected function __construct(string $file, Encoding $encoding)
+        protected function __construct(string $reference, Encoding $encoding)
         {
             $this->encoding = $encoding;
 
-            if (false === ($context = fopen($file, 'r'))) {
-                throw new CannotOpenFile($file);
+            if (false === ($context = fopen($reference, 'r'))) {
+                throw new CannotOpenFile($reference);
             }
 
             $this->context = $context;
-            $this->file = $file;
+            $this->reference = $reference;
         }
 
         public function __destruct()
@@ -47,7 +48,7 @@
          */
         public function getFileSize(): ?int
         {
-            $size = filesize($this->file);
+            $size = filesize($this->reference);
 
             return (false !== $size) ? $size : null;
         }

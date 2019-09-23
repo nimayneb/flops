@@ -10,6 +10,14 @@ Key features:
 - No use of SPL (Standard PHP Library)
 - Proven and simplest patterns (see PHP documentation)
 
+Use PHP internals for filesystem:
+
+`file_get_contents` `file_put_contents` `touch` `mkdir` `rmdir` `fopen` `feof` `ftell` `ftruncate` `fwrite` `fgets` `fgetc`
+`fseek` `fread` `fclose` `fileatime` `filectime` `filegroup` `filemtime` `fileowner` `fileperms` `filesize` `chdir`
+`chgroup` `chmod` `clearstatcache` `disk_free_space` `disk_total_space` `copy` `file_exists` `is_file` `is_link`
+`is_dir` `is_executable` `is_readable` `is_writable` `pathinfo` `basename` `dirname` `readlink` `realpath` `rename`
+`unlink` `symlink`
+
 Example of use:
 
     use JayBeeR\Flops\LocalFileSystem;

@@ -1,19 +1,19 @@
 <?php namespace JayBeeR\Flops\Properties {
 
-    use JayBeeR\Flops\ContentBuilder;
+    use JayBeeR\Flops\Operations\ContentOperation;
 
     trait ContentProperty
     {
         use ReferenceProperty;
 
-        protected ?ContentBuilder $content = null;
+        protected ?ContentOperation $content = null;
 
         /**
          * @return string
          */
-        public function getContentBuilder(): string
+        public function withContent(): string
         {
-            return $this->content ??= ContentBuilder::get($this->reference);
+            return $this->content ??= ContentOperation::get($this->reference);
         }
     }
 }

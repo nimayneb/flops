@@ -1,13 +1,17 @@
-<?php namespace JayBeeR\Flops {
+<?php namespace JayBeeR\Flops\Operations {
 
     use Closure;
     use Generator;
     use JayBeeR\Flops\Failures\CannotReadContentFromFile;
     use JayBeeR\Flops\Failures\CannotOpenFile;
     use JayBeeR\Flops\Failures\UnexpectedAvailableContent;
+    use JayBeeR\Flops\FileResource;
+    use JayBeeR\Flops\Reference;
 
-    class ContentBuilder extends Reference
+    class ContentOperation extends Reference
     {
+        protected FileResource $resource;
+
         /**
          * @return string
          * @throws CannotReadContentFromFile
