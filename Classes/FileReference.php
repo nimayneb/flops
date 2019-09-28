@@ -13,7 +13,6 @@
     use JayBeeR\Flops\Failures\ReferenceIsNotSubDirectory;
     use JayBeeR\Flops\Failures\ReferenceNotFound;
     use JayBeeR\Flops\Operations\CopyFileOperation;
-    use JayBeeR\Flops\Operations\CreateFileOperation;
     use JayBeeR\Flops\Operations\DeleteFileOperation;
     use JayBeeR\Flops\Operations\FileOperations;
     use JayBeeR\Flops\Operations\MoveFileOperation;
@@ -39,7 +38,6 @@
         use MoveFileOperation;
         use RenameFileOperation;
         use CopyFileOperation;
-        use CreateFileOperation;
 
         use ContentConstraintsMethods;
 

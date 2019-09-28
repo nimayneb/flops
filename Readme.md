@@ -24,7 +24,7 @@ Example of use:
     
     $localBinaries = LocalFileSystem::get('/usr/local/bin/');
     $composerFile = LocalFileSystem::get('composer.phar');
-    $composerBinary = $composerFile->copyTo($localBinaries, '')->omitExtension();
+    $composerBinary = $composerFile->copyTo($localBinaries)->omitExtension();
     $composerBinary->setPermission(function(Permissions $permissions) {
         $permissions->setExecutionAccessRightsForAll();
     });
@@ -39,6 +39,7 @@ Table of contents
 1. [Symbolic link information](Documentation/SymbolicLinkInformation.md)
 1. [File resources](Documentation/FileResources.md)
 1. [File encoding](Documentation/FileEncoding.md)
+1. [File modes](Documentation/FileModes.md)
 1. [Permissions](Documentation/Permissions.md)
 1. [Root line](Documentation/RootLine.md)
 1. [Write content](Documentation/WriteContent.md)

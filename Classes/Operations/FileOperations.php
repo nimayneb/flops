@@ -10,8 +10,6 @@
 
     interface FileOperations
     {
-        public function createFile(string $fileName, bool $overwrite): FileReference;
-
         public function deleteFile(): void;
 
         public function moveTo(DirectoryReference $pathReference, string $newName = null, bool $overwrite = false): FileReference;

@@ -7,15 +7,23 @@
 
     use Closure;
     use Generator;
+    use JayBeeR\Flops\CannotTruncateFile;
     use JayBeeR\Flops\Failures\CannotReadContentFromFile;
     use JayBeeR\Flops\Failures\CannotOpenFile;
+    use JayBeeR\Flops\Failures\CannotWriteContentToFile;
+    use JayBeeR\Flops\Failures\InvalidZeroLengthForReading;
+    use JayBeeR\Flops\Failures\ReferenceIsNotFile;
+    use JayBeeR\Flops\Failures\ReferenceNotFound;
     use JayBeeR\Flops\Failures\UnexpectedAvailableContent;
     use JayBeeR\Flops\FileResource;
-    use JayBeeR\Flops\Reference;
+    use JayBeeR\Flops\Modes\FileMode;
+    use JayBeeR\Flops\Properties\ReferenceProperty;
 
-    class ContentOperation extends Reference
+    trait ContentOperation
     {
-        protected FileResource $resource;
+        use ReferenceProperty;
+
+        protected ?FileResource $resource = null;
 
         /**
          * @return string
@@ -34,6 +42,7 @@
 
         /**
          * @param string $data
+         *
          * @return bool
          */
         public function setContent(string $data): bool
@@ -47,17 +56,15 @@
          * @param int $length
          *
          * @throws CannotOpenFile
+         * @throws CannotTruncateFile
+         * @throws ReferenceIsNotFile
+         * @throws ReferenceNotFound
          */
         public function truncate(int $length = 0)
         {
-            $resource = fopen($this->reference, 'r+');
-
-            if (is_resource($resource)) {
-                ftruncate($resource, $length);
-                fclose($resource);
-            } else {
-                throw new CannotOpenFile($this->reference);
-            }
+            $this->resource = FileResource::get($this->reference, FileMode::reading()->writing());
+            $this->resource->truncate($length);
+            $this->resource = null;
         }
 
         /**
@@ -70,23 +77,16 @@
          *      });
          *
          * @param Closure|Generator $generatorHandler
-         * @param string $mode
          *
-         * @throws CannotOpenFile
+         * @throws CannotWriteContentToFile
          */
-        public function writeContent(Closure $generatorHandler, string $mode): void
+        protected function writeContent(Closure $generatorHandler): void
         {
-            $resource = fopen($this->reference, $mode);
-
-            if (is_resource($resource)) {
-                foreach ($generatorHandler() as $content) {
-                    fwrite($resource, $content);
-                }
-
-                fclose($resource);
-            } else {
-                throw new CannotOpenFile($this->reference);
+            foreach ($generatorHandler() as $content) {
+                $this->resource->write($content);
             }
+
+            $this->resource = null;
         }
 
         /**
@@ -100,24 +100,41 @@
          *
          * @return Generator|string[]
          * @throws CannotOpenFile
+         * @throws InvalidZeroLengthForReading
+         * @throws ReferenceIsNotFile
+         * @throws ReferenceNotFound
          * @throws UnexpectedAvailableContent
          */
-        public function readContent()
+        public function readCharacter()
         {
-            $resource = fopen($this->reference, 'r');
+            $this->resource = FileResource::get($this->reference, FileMode::reading());
 
-            if (is_resource($resource)) {
-                while (($buffer = fgets($resource)) !== false) {
-                    yield $buffer;
-                }
+            while (($buffer = $this->resource->readCharacter()) !== false) {
+                yield $buffer;
+            }
 
-                if (!feof($resource)) {
-                    throw new UnexpectedAvailableContent($this->reference);
-                }
+            if (!$this->resource->isEndOfFile()) {
+                throw new UnexpectedAvailableContent($this->reference);
+            }
+        }
 
-                fclose($resource);
-            } else {
-                throw new CannotOpenFile($this->reference);
+        /**
+         * @return Generator
+         * @throws CannotOpenFile
+         * @throws ReferenceIsNotFile
+         * @throws ReferenceNotFound
+         * @throws UnexpectedAvailableContent
+         */
+        public function readLine()
+        {
+            $this->resource = FileResource::get($this->reference, FileMode::reading());
+
+            while (($buffer = $this->resource->readLine()) !== false) {
+                yield $buffer;
+            }
+
+            if (!$this->resource->isEndOfFile()) {
+                throw new UnexpectedAvailableContent($this->reference);
             }
         }
 
@@ -125,20 +142,28 @@
          * @param Closure $generatorHandler
          *
          * @throws CannotOpenFile
+         * @throws CannotWriteContentToFile
+         * @throws ReferenceIsNotFile
+         * @throws ReferenceNotFound
          */
         public function newContent(Closure $generatorHandler)
         {
-            $this->writeContent($generatorHandler, 'w');
+            $this->resource = FileResource::writing($this->reference);
+            $this->writeContent($generatorHandler);
         }
 
         /**
          * @param Closure $generatorHandler
          *
          * @throws CannotOpenFile
+         * @throws CannotWriteContentToFile
+         * @throws ReferenceIsNotFile
+         * @throws ReferenceNotFound
          */
         public function addContent(Closure $generatorHandler)
         {
-            $this->writeContent($generatorHandler, 'a');
+            $this->resource = FileResource::appending($this->reference);
+            $this->writeContent($generatorHandler);
         }
     }
 }

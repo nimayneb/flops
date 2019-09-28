@@ -6,9 +6,12 @@
      */
 
     use JayBeeR\Flops\DirectoryReference;
+    use JayBeeR\Flops\FileReference;
 
     interface FolderOperations
     {
+        public function createFile(string $fileName, bool $overwrite): FileReference;
+
         public function deleteFolder(): void;
 
         public function moveTo(DirectoryReference $pathReference, string $newName = null, bool $overwrite = false): DirectoryReference;

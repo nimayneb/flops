@@ -14,6 +14,7 @@
     use JayBeeR\Flops\Failures\ReferenceIsNotSubDirectory;
     use JayBeeR\Flops\Failures\ReferenceNotFound;
     use JayBeeR\Flops\Operations\CopyFolderOperation;
+    use JayBeeR\Flops\Operations\CreateFileOperation;
     use JayBeeR\Flops\Operations\CreateFolderOperation;
     use JayBeeR\Flops\Operations\DeleteFolderOperation;
     use JayBeeR\Flops\Operations\FindOperations;
@@ -28,6 +29,7 @@
 
         use DeleteFolderOperation;
         use CreateFolderOperation;
+        use CreateFileOperation;
         use MoveFolderOperation;
         use RenameFolderOperation;
         use CopyFolderOperation;
