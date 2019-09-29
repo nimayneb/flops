@@ -17,13 +17,11 @@
     use JayBeeR\Flops\Failures\ReferenceNotFound;
     use JayBeeR\Flops\Modes\FileMode;
     use JayBeeR\Flops\Modes\OpenMode;
-    use JayBeeR\Flops\Operations\ResourceProperty;
     use JayBeeR\Flops\Properties\ReferenceProperty;
 
     class FileResource
     {
         use ReferenceProperty;
-        use ResourceProperty;
 
         protected Encoding $encoding;
 
@@ -281,6 +279,40 @@
         public static function writing(string $file, Encoding $encoding = null): FileResource
         {
             $resource = static::get($file, FileMode::writing());
+            $resource->setEncoding($encoding ?? Utf8::encoding());
+
+            return $resource;
+        }
+
+        /**
+         * @param string $file
+         * @param Encoding $encoding
+         *
+         * @return FileResource
+         * @throws CannotOpenFile
+         * @throws ReferenceIsNotFile
+         * @throws ReferenceNotFound
+         */
+        public static function creating(string $file, Encoding $encoding = null): FileResource
+        {
+            $resource = static::get($file, FileMode::creating());
+            $resource->setEncoding($encoding ?? Utf8::encoding());
+
+            return $resource;
+        }
+
+        /**
+         * @param string $file
+         * @param Encoding $encoding
+         *
+         * @return FileResource
+         * @throws CannotOpenFile
+         * @throws ReferenceIsNotFile
+         * @throws ReferenceNotFound
+         */
+        public static function truncating(string $file, Encoding $encoding = null): FileResource
+        {
+            $resource = static::get($file, FileMode::truncating());
             $resource->setEncoding($encoding ?? Utf8::encoding());
 
             return $resource;

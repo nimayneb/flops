@@ -35,7 +35,7 @@
          * @throws ReferenceIsNotFile
          * @throws ReferenceNotFound
          */
-        public function createFile(string $fileName, bool $overwrite): FileReference
+        public function createFile(string $fileName, bool $overwrite = false): FileReference
         {
             Reference::assertValidFullName($fileName);
 

@@ -26,7 +26,16 @@
                 ['s', '*', true],
                 ['s', '??', false],
                 ['ss', '*', true],
-                ['', '*', false],
+                ['', '*', true],
+                ['', '**', false],
+
+                ['search phrase', 'search**phrase', true],
+                ['search phrase', 'search*phrase', true],
+                ['searchphrase', 'search**phrase', false],
+                ['searchphrase', 'search*phrase', true],
+                ['search phrase', 'search phrase?*', true],
+                ['search phrases', 'search phrase?*', true],
+                ['search phrasess', 'search phrase?*', false],
 
                 ['search phrase', '*', true],
                 ['search phrase', '*phrase', true],
@@ -51,14 +60,17 @@
                 ['search phrase', '?ea?ch*ph?a*e', true],
 
                 ['search phrase', '??earch phra*', false],
-                ['search phrase', '?ea??ch**ph?a*e', false],
+                ['search phrase', '?ea??ch*ph?a*e', false],
 
                 // Escape characters
                 ['?', '\\?', true],
                 ['*', '\\*', true],
+                ['\\', '\\', true],
+                ['\\a', '\\a', true],
+                ['\\a', '\\\\a', true],
                 ['\\', '\\\\', true],
                 ['search phrase?', '*\\?', true],
-                ['?search phrase?', '\\?*', true],
+                ['?search phrase', '\\?*', true],
                 ['search\\phrase', '*\\\\*', true],
                 ['search\\*', '*\\\\\\*', true],
                 ['search\\phrase', '*\\phrase', true],
@@ -75,9 +87,10 @@
         public function wildcardVariantsWithExceptionsProvider()
         {
             return [
-                ['search phrase', '?*'],
-                ['search phrase', '*?'],
-                ['search phrase', '**']
+                ['search phrase', '***'],
+                ['search phrase', '?**'],
+                ['search phrase', '?*?'],
+                ['search phrase', '*?']
             ];
         }
 
@@ -94,14 +107,12 @@
         public function hasWildcardMatchReturnsResultForMatchingWildcard(string $subject, string $pattern, bool $valid)
         {
             $result = $this->subject->hasWildcardMatch($subject, $pattern);
-
             $this->assertEquals($valid, $result);
         }
 
         /**
          * @param string $subject
          * @param string $pattern
-         * @param bool $valid
          *
          * @throws InvalidCharacterForWildcardPattern
          *
