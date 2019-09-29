@@ -22,6 +22,7 @@
     use JayBeeR\Flops\Operations\MoveFolderOperation;
     use JayBeeR\Flops\Operations\RenameFolderOperation;
     use JayBeeR\Flops\Properties\DirectoryProperty;
+    use JayBeeR\Wildcard\WildcardMatcher;
 
     abstract class DirectoryReference extends Reference implements Directory, FolderOperations, TimeConstraints
     {
