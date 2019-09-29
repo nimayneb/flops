@@ -12,11 +12,10 @@ Key features:
 
 Use PHP internals for filesystem:
 
-`file_get_contents` `file_put_contents` `touch` `mkdir` `rmdir` `fopen` `feof` `ftell` `ftruncate` `fwrite` `fgets` `fgetc`
-`fseek` `fread` `fclose` `fileatime` `filectime` `filegroup` `filemtime` `fileowner` `fileperms` `filesize` `chdir`
-`chgroup` `chmod` `clearstatcache` `disk_free_space` `disk_total_space` `copy` `file_exists` `is_file` `is_link`
-`is_dir` `is_executable` `is_readable` `is_writable` `pathinfo` `basename` `dirname` `readlink` `realpath` `rename`
-`unlink` `symlink`
+`chgrp` `chmod` `clearstatcache` `copy` `disk_​free_​space` `disk_​total_​space` `fclose` `feof` `fgetc` `fgets`
+`file_​exists` `file_​get_​contents` `file_​put_​contents` `fileatime` `filectime` `filegroup` `filemtime` `fileowner`
+`fileperms` `filesize` `fopen` `fread` `fseek` `ftell` `ftruncate` `fwrite` `is_​dir` `is_​executable` `is_​file`
+`is_​link` `is_​readable` `is_​writable` `mkdir` `pathinfo` `readlink` `realpath` `rename` `rmdir` `symlink` `touch` `unlink`
 
 Example of use:
 
