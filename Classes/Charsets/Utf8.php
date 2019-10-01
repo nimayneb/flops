@@ -146,9 +146,11 @@
                 }
 
                 for ($i = 0; $i < $bytesToLoad; $i++) {
-                    if (null === ($nextByte = $byteHandler())) {
+                    if (null === ($nextCharacter = $byteHandler())) {
                         throw new MissingRequiredEncodingBytes($character, $bytesToLoad);
                     }
+
+                    $nextByte = ord($nextCharacter);
 
                     /**
                      *  Bit mask: 10------ (hex: 80) => € (Euro sign)
@@ -157,7 +159,7 @@
                         throw new InvalidEncodingByte($character);
                     }
 
-                    $character .= $nextByte;
+                    $character .= $nextCharacter;
                 }
             }
 
