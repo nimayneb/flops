@@ -162,7 +162,7 @@
                 throw new InvalidZeroLengthForReading();
             }
 
-            if (false === $content) {
+            if ((false === $content) || '' === $content) {
                 $content = null;
             } else {
                 $this->position += strlen($content);
