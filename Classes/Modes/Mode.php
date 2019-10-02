@@ -23,6 +23,22 @@
 
         protected const BINARY = 64;
 
+        public const READ = 'r';
+
+        public const READ_WRITE = 'r+';
+
+        public const WRITE = 'w';
+
+        public const WRITE_READ = 'w+';
+
+        public const APPEND = 'a';
+
+        public const APPEND_READ = 'a+';
+
+        public const CREATE = 'x';
+
+        public const CREATE_READ = 'x+';
+
         /**
          *  Mode    | Creating              | Appending     | Truncating    | Existing              | Creating (non-existing)   | Writing   | Reading  | Cursor starts      | Purpose
          *  --------|-----------------------|---------------|---------------|-----------------------|---------------------------|-----------|----------|--------------------|------------------------------------------------------------------
@@ -34,49 +50,47 @@
          *   a+     | -                     | y             | -             | -                     | y                         | y         | y        | end                | write from end of file, create if needed, with read options
          *   x      | y (fails by existing) | -             | -             | -                     | y                         | y         | -        | beginning          | like w, but prevents over-writing an existing file
          *   x+     | y (fails by existing) | -             | -             | -                     | y                         | y         | y        | beginning          | like w+, but prevents over writing an existing file
-         *   c      | -                     | -             | -             | -                     | y                         | y         | -        | beginning          | open/create a file for writing without deleting current content
-         *   c+     | -                     | -             | -             | -                     | y                         | y         | y        | beginning          | open/create a file that is read, and then written back down
          */
 
         protected const MODES = [
-            'r' => self::EXISTING + self::READING,
-            'r+' => self::EXISTING + self::READING + self::WRITING,
-            'w' => self::TRUNCATING + self::WRITING,
-            'w+' => self::TRUNCATING + self::WRITING + self::READING,
-            'a' => self::APPENDING + self::WRITING,
-            'a+' => self::APPENDING + self::WRITING + self::READING,
-            'x' => self::CREATING + self::WRITING,
-            'x+' => self::CREATING + self::WRITING + self::READING,
+            self::READ => self::EXISTING + self::READING,
+            self::READ_WRITE => self::EXISTING + self::READING + self::WRITING,
+            self::WRITE => self::TRUNCATING + self::WRITING,
+            self::WRITE_READ => self::TRUNCATING + self::WRITING + self::READING,
+            self::APPEND => self::APPENDING + self::WRITING,
+            self::APPEND_READ => self::APPENDING + self::WRITING + self::READING,
+            self::CREATE => self::CREATING + self::WRITING,
+            self::CREATE_READ => self::CREATING + self::WRITING + self::READING,
         ];
 
         public function isReading()
         {
-            return static::MODES[(string) $this->modes] & 1;
+            return static::MODES[(string) $this->modes] & self::READING;
         }
 
         public function isWriting()
         {
-            return static::MODES[(string) $this->modes] & 2;
+            return static::MODES[(string) $this->modes] & self::WRITING;
         }
 
         public function hadToBeCreated()
         {
-            return static::MODES[(string) $this->modes] & 4;
+            return static::MODES[(string) $this->modes] & self::CREATING;
         }
 
         public function isAppending()
         {
-            return static::MODES[(string) $this->modes] & 8;
+            return static::MODES[(string) $this->modes] & self::APPENDING;
         }
 
         public function isTruncating()
         {
-            return static::MODES[(string) $this->modes] & 16;
+            return static::MODES[(string) $this->modes] & self::TRUNCATING;
         }
 
         public function hadToExist()
         {
-            return static::MODES[(string) $this->modes] & 32;
+            return static::MODES[(string) $this->modes] & self::EXISTING;
         }
     }
 } 

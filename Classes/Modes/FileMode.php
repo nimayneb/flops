@@ -46,121 +46,121 @@
 
         protected static array $modeVariants = [
             self::TRUNCATING => [
-                self::CURRENT => 'w',
+                self::CURRENT => Mode::WRITE,
 
                 self::WRITING => [
-                    self::CURRENT => 'w',
-                    self::READING => 'w+'
+                    self::CURRENT => Mode::WRITE,
+                    self::READING => Mode::WRITE_READ
                 ],
                 self::READING => [
-                    self::CURRENT => 'w+',
-                    self::WRITING => 'w+'
+                    self::CURRENT => Mode::WRITE_READ,
+                    self::WRITING => Mode::WRITE_READ
                 ]
             ],
 
             self::APPENDING => [
-                self::CURRENT => 'a',
+                self::CURRENT => Mode::APPEND,
 
                 self::WRITING => [
-                    self::CURRENT => 'a',
-                    self::READING => 'a+'
+                    self::CURRENT => Mode::APPEND,
+                    self::READING => Mode::APPEND_READ
                 ],
                 self::READING => [
-                    self::CURRENT => 'a+',
-                    self::WRITING => 'a+'
+                    self::CURRENT => Mode::APPEND_READ,
+                    self::WRITING => Mode::APPEND_READ
                 ]
             ],
 
             self::CREATING => [
-                self::CURRENT => 'x',
+                self::CURRENT => MODE::CREATE,
 
                 self::WRITING => [
-                    self::CURRENT => 'x',
-                    self::READING => 'x+'
+                    self::CURRENT => MODE::CREATE,
+                    self::READING => Mode::CREATE_READ
                 ],
                 self::READING => [
-                    self::CURRENT => 'x+',
-                    self::WRITING => 'x+'
+                    self::CURRENT => Mode::CREATE_READ,
+                    self::WRITING => Mode::CREATE_READ
                 ]
             ],
 
             self::EXISTING => [
-                self::CURRENT => 'r',
+                self::CURRENT => Mode::READ,
 
                 self::WRITING => [
-                    self::CURRENT => 'r+',
-                    self::READING => 'r+'
+                    self::CURRENT => Mode::READ_WRITE,
+                    self::READING => Mode::READ_WRITE
                 ],
                 self::READING => [
-                    self::CURRENT => 'r',
+                    self::CURRENT => Mode::READ,
 
-                    self::WRITING => 'r+'
+                    self::WRITING => Mode::READ_WRITE
                 ]
             ],
 
             self::READING => [
-                self::CURRENT => 'r',
+                self::CURRENT => Mode::READ,
 
                 self::WRITING => [
-                    self::CURRENT => 'r+',
+                    self::CURRENT => Mode::READ_WRITE,
 
-                    self::TRUNCATING => 'w+',
-                    self::APPENDING => 'a+',
-                    self::CREATING => 'x+',
-                    self::EXISTING => 'r+'
+                    self::TRUNCATING => Mode::WRITE_READ,
+                    self::APPENDING => Mode::APPEND_READ,
+                    self::CREATING => Mode::CREATE_READ,
+                    self::EXISTING => Mode::READ_WRITE
                 ],
                 self::TRUNCATING => [
-                    self::CURRENT => 'w+',
+                    self::CURRENT => Mode::WRITE_READ,
 
-                    self::WRITING => 'w+'
+                    self::WRITING => Mode::WRITE_READ
                 ],
                 self::APPENDING => [
-                    self::CURRENT => 'a+',
+                    self::CURRENT => Mode::APPEND_READ,
 
-                    self::WRITING => 'a+'
+                    self::WRITING => Mode::APPEND_READ
                 ],
                 self::CREATING => [
-                    self::CURRENT => 'x+',
+                    self::CURRENT => Mode::CREATE_READ,
 
-                    self::WRITING => 'x+'
+                    self::WRITING => Mode::CREATE_READ
                 ],
                 self::EXISTING => [
-                    self::CURRENT => 'r',
+                    self::CURRENT => Mode::READ,
 
-                    self::WRITING => 'r+'
+                    self::WRITING => Mode::READ_WRITE
                 ]
             ],
 
             self::WRITING => [
-                self::CURRENT => 'w',
+                self::CURRENT => Mode::WRITE,
 
                 self::READING => [
-                    self::CURRENT => 'w+',
+                    self::CURRENT => Mode::WRITE_READ,
 
-                    self::TRUNCATING => 'w+',
-                    self::APPENDING => 'a+',
-                    self::CREATING => 'x+',
-                    self::EXISTING => 'r+'
+                    self::TRUNCATING => Mode::WRITE_READ,
+                    self::APPENDING => Mode::APPEND_READ,
+                    self::CREATING => Mode::CREATE_READ,
+                    self::EXISTING => Mode::READ_WRITE
                 ],
                 self::TRUNCATING => [
-                    self::CURRENT => 'w',
+                    self::CURRENT => Mode::WRITE,
 
-                    self::READING => 'w+'
+                    self::READING => Mode::WRITE_READ
                 ],
                 self::APPENDING => [
-                    self::CURRENT => 'a',
+                    self::CURRENT => Mode::APPEND,
 
-                    self::READING => 'a+'
+                    self::READING => Mode::APPEND_READ
                 ],
                 self::CREATING => [
-                    self::CURRENT => 'x',
+                    self::CURRENT => MODE::CREATE,
 
-                    self::READING => 'x+'
+                    self::READING => Mode::CREATE_READ
                 ],
                 self::EXISTING => [
-                    self::CURRENT => 'r+',
+                    self::CURRENT => Mode::READ_WRITE,
 
-                    self::READING => 'r+'
+                    self::READING => Mode::READ_WRITE
                 ]
             ]
         ];
