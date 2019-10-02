@@ -5,30 +5,36 @@
      * See LICENSE.txt that was shipped with this package.
      */
 
-    class SpecialModeFinal implements OpenMode
+    class SpecialModeFinal extends Mode
     {
-        use ModesProperty;
-
         /**
-         * @return FinalMode
+         * @return EmptyMode
          */
-        public function creating()
+        public function mustNotExists(): EmptyMode
         {
             return FinalMode::get($this->modes[FileMode::CREATING]);
         }
 
         /**
-         * @return FinalMode
+         * @return EmptyMode
          */
-        public function appending()
+        public function mustExists(): EmptyMode
+        {
+            return FinalMode::get($this->modes[FileMode::EXISTING]);
+        }
+
+        /**
+         * @return EmptyMode
+         */
+        public function appending(): EmptyMode
         {
             return FinalMode::get($this->modes[FileMode::APPENDING]);
         }
 
         /**
-         * @return FinalMode
+         * @return EmptyMode
          */
-        public function truncating()
+        public function truncating(): EmptyMode
         {
             return FinalMode::get($this->modes[FileMode::TRUNCATING]);
         }

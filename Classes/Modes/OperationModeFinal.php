@@ -5,22 +5,20 @@
      * See LICENSE.txt that was shipped with this package.
      */
 
-    class OperationModeFinal implements OpenMode, ReadingMode, WritingMode
+    class OperationModeFinal extends Mode implements ReadingMode, WritingMode
     {
-        use ModesProperty;
-
         /**
-         * @return FinalMode
+         * @return EmptyMode
          */
-        public function writing()
+        public function writing(): EmptyMode
         {
             return FinalMode::get($this->modes[FileMode::WRITING]);
         }
 
         /**
-         * @return FinalMode
+         * @return EmptyMode
          */
-        public function reading()
+        public function reading(): EmptyMode
         {
             return FinalMode::get($this->modes[FileMode::READING]);
         }

@@ -5,8 +5,7 @@
      * See LICENSE.txt that was shipped with this package.
      */
 
-    interface OpenMode
+    interface EmptyMode
     {
-
     }
-}
+} 

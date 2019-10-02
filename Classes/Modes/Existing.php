@@ -5,7 +5,7 @@
      * See LICENSE.txt that was shipped with this package.
      */
 
-    class Truncating extends Mode
+    class Existing extends Mode
     {
         /**
          * @return WritingMode

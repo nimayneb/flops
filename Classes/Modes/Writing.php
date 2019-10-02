@@ -5,10 +5,8 @@
      * See LICENSE.txt that was shipped with this package.
      */
 
-    class Writing implements OpenMode
+    class Writing extends Mode
     {
-        use ModesProperty;
-
         /**
          * @return SpecialModeFinal
          */
@@ -20,9 +18,17 @@
         /**
          * @return WritingMode
          */
-        public function creating(): WritingMode
+        public function mustNotExists(): WritingMode
         {
             return OperationModeFinal::get($this->modes[FileMode::CREATING]);
+        }
+
+        /**
+         * @return WritingMode
+         */
+        public function mustExists(): WritingMode
+        {
+            return OperationModeFinal::get($this->modes[FileMode::EXISTING]);
         }
 
         /**

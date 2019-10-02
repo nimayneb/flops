@@ -5,10 +5,8 @@
      * See LICENSE.txt that was shipped with this package.
      */
 
-    class Appending implements OpenMode
+    class Appending extends Mode
     {
-        use ModesProperty;
-
         /**
          * @return WritingMode
          */

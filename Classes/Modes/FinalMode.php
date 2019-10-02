@@ -5,8 +5,7 @@
      * See LICENSE.txt that was shipped with this package.
      */
 
-    class FinalMode implements OpenMode
+    class FinalMode extends Mode implements EmptyMode
     {
-        use ModesProperty;
     }
 } 

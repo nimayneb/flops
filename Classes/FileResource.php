@@ -16,7 +16,7 @@
     use JayBeeR\Flops\Failures\ReferenceIsNotFile;
     use JayBeeR\Flops\Failures\ReferenceNotFound;
     use JayBeeR\Flops\Modes\FileMode;
-    use JayBeeR\Flops\Modes\OpenMode;
+    use JayBeeR\Flops\Modes\Mode;
     use JayBeeR\Flops\Properties\ReferenceProperty;
 
     class FileResource
@@ -27,6 +27,8 @@
 
         protected ?int $position = null;
 
+        protected Mode $mode;
+
         /**
          * @var resource|null
          */
@@ -34,14 +36,15 @@
 
         /**
          * @param FileReference $reference
-         * @param OpenMode $mode
+         * @param Mode $mode
          *
          * @throws CannotOpenFile
          */
-        protected function __construct(FileReference $reference, OpenMode $mode)
+        protected function __construct(FileReference $reference, Mode $mode)
         {
             $this->reference = $reference;
-            $this->setResource($mode);
+            $this->mode = $mode;
+            $this->setResource();
         }
 
         /**
@@ -55,17 +58,23 @@
         }
 
         /**
-         * @param OpenMode $mode
-         *
          * @throws CannotOpenFile
          */
-        protected function setResource(OpenMode $mode)
+        protected function setResource()
         {
-            $this->resource = fopen($this->reference, (string)$mode);
+            $this->resource = fopen($this->reference, (string)$this->mode);
 
             if (!is_resource($this->resource)) {
                 throw new CannotOpenFile($this->reference);
             }
+        }
+
+        /**
+         * @return Mode
+         */
+        public function getMode(): Mode
+        {
+            return $this->mode;
         }
 
         /**
@@ -236,14 +245,14 @@
 
         /**
          * @param string $file
-         * @param OpenMode $mode
+         * @param Mode $mode
          *
          * @return FileResource
          * @throws CannotOpenFile
          * @throws ReferenceIsNotFile
          * @throws ReferenceNotFound
          */
-        public static function get(string $file, OpenMode $mode): FileResource
+        public static function get(string $file, Mode $mode): FileResource
         {
             $resource = FileReference::get($file);
 
@@ -295,7 +304,7 @@
          */
         public static function creating(string $file, Encoding $encoding = null): FileResource
         {
-            $resource = static::get($file, FileMode::creating());
+            $resource = static::get($file, FileMode::mustNotExists());
             $resource->setEncoding($encoding ?? Utf8::encoding());
 
             return $resource;

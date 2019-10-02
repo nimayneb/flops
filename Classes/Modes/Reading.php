@@ -5,14 +5,12 @@
      * See LICENSE.txt that was shipped with this package.
      */
 
-    class Reading implements OpenMode
+    class Reading extends Mode
     {
-        use ModesProperty;
-
         /**
          * @return SpecialModeFinal
          */
-        public function writing()
+        public function writing(): SpecialModeFinal
         {
             return SpecialModeFinal::get($this->modes[FileMode::WRITING]);
         }
@@ -20,9 +18,17 @@
         /**
          * @return ReadingMode
          */
-        public function creating(): ReadingMode
+        public function mustNotExists(): ReadingMode
         {
             return OperationModeFinal::get($this->modes[FileMode::CREATING]);
+        }
+
+        /**
+         * @return ReadingMode
+         */
+        public function mustExists(): ReadingMode
+        {
+            return OperationModeFinal::get($this->modes[FileMode::EXISTING]);
         }
 
         /**

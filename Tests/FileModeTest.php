@@ -51,7 +51,7 @@
          */
         public function allVariantsReturnsFileMode()
         {
-            // 37x variants to set 8 file modes
+            // 57x variants to set 8 file modes
             $this->assertEquals('w', FileMode::truncating());
             $this->assertEquals('w', FileMode::truncating()->writing());
             $this->assertEquals('w+', FileMode::truncating()->writing()->reading());
@@ -64,19 +64,26 @@
             $this->assertEquals('a', FileMode::appending()->writing());
             $this->assertEquals('a+', FileMode::appending()->writing()->reading());
 
-            $this->assertEquals('x', FileMode::creating());
-            $this->assertEquals('x+', FileMode::creating()->reading());
-            $this->assertEquals('x+', FileMode::creating()->reading()->writing());
-            $this->assertEquals('x', FileMode::creating()->writing());
-            $this->assertEquals('x+', FileMode::creating()->writing()->reading());
+            $this->assertEquals('x', FileMode::mustNotExists());
+            $this->assertEquals('x+', FileMode::mustNotExists()->reading());
+            $this->assertEquals('x+', FileMode::mustNotExists()->reading()->writing());
+            $this->assertEquals('x', FileMode::mustNotExists()->writing());
+            $this->assertEquals('x+', FileMode::mustNotExists()->writing()->reading());
+
+            $this->assertEquals('r', FileMode::mustExists());
+            $this->assertEquals('r', FileMode::mustExists()->reading());
+            $this->assertEquals('r+', FileMode::mustExists()->reading()->writing());
 
             $this->assertEquals('r', FileMode::reading());
             $this->assertEquals('r+', FileMode::reading()->writing());
-            $this->assertEquals('x+', FileMode::reading()->writing()->creating());
+            $this->assertEquals('x+', FileMode::reading()->writing()->mustNotExists());
+            $this->assertEquals('r+', FileMode::reading()->writing()->mustExists());
             $this->assertEquals('a+', FileMode::reading()->writing()->appending());
             $this->assertEquals('w+', FileMode::reading()->writing()->truncating());
-            $this->assertEquals('x+', FileMode::reading()->creating());
-            $this->assertEquals('x+', FileMode::reading()->creating()->writing());
+            $this->assertEquals('x+', FileMode::reading()->mustNotExists());
+            $this->assertEquals('x+', FileMode::reading()->mustNotExists()->writing());
+            $this->assertEquals('r', FileMode::reading()->mustExists());
+            $this->assertEquals('r+', FileMode::reading()->mustExists()->writing());
             $this->assertEquals('a+', FileMode::reading()->appending());
             $this->assertEquals('a+', FileMode::reading()->appending()->writing());
             $this->assertEquals('w+', FileMode::reading()->truncating());
@@ -84,11 +91,14 @@
 
             $this->assertEquals('w', FileMode::writing());
             $this->assertEquals('w+', FileMode::writing()->reading());
-            $this->assertEquals('x+', FileMode::writing()->reading()->creating());
+            $this->assertEquals('x+', FileMode::writing()->reading()->mustNotExists());
+            $this->assertEquals('r+', FileMode::writing()->reading()->mustExists());
             $this->assertEquals('a+', FileMode::writing()->reading()->appending());
             $this->assertEquals('w+', FileMode::writing()->reading()->truncating());
-            $this->assertEquals('x', FileMode::writing()->creating());
-            $this->assertEquals('x+', FileMode::writing()->creating()->reading());
+            $this->assertEquals('x', FileMode::writing()->mustNotExists());
+            $this->assertEquals('x+', FileMode::writing()->mustNotExists()->reading());
+            $this->assertEquals('r+', FileMode::writing()->mustExists());
+            $this->assertEquals('r+', FileMode::writing()->mustExists()->reading());
             $this->assertEquals('a', FileMode::writing()->appending());
             $this->assertEquals('a+', FileMode::writing()->appending()->reading());
             $this->assertEquals('w', FileMode::writing()->truncating());

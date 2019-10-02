@@ -5,10 +5,8 @@
      * See LICENSE.txt that was shipped with this package.
      */
 
-    class Creating implements OpenMode
+    class Creating extends Mode
     {
-        use ModesProperty;
-
         /**
          * @return WritingMode
          */

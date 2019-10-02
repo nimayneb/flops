@@ -21,6 +21,7 @@
          *     c    |     -     |     x     |     x     |     -     |     -     |     -     |     x     |    c-reate    |
          *     c+   |     x     |     x     |     x     |     -     |     -     |     -     |     x     |    c-reate    |
          *
+         * @see https://www.php.net/manual/en/function.fopen.php
          */
 
         // x, x+
@@ -37,6 +38,9 @@
 
         // w, w+
         public const TRUNCATING = 'truncating';
+
+        // r, r+
+        public const EXISTING = 'existing';
 
         public const CURRENT = 'current';
 
@@ -80,6 +84,20 @@
                 ]
             ],
 
+            self::EXISTING => [
+                self::CURRENT => 'r',
+
+                self::WRITING => [
+                    self::CURRENT => 'r+',
+                    self::READING => 'r+'
+                ],
+                self::READING => [
+                    self::CURRENT => 'r',
+
+                    self::WRITING => 'r+'
+                ]
+            ],
+
             self::READING => [
                 self::CURRENT => 'r',
 
@@ -88,7 +106,8 @@
 
                     self::TRUNCATING => 'w+',
                     self::APPENDING => 'a+',
-                    self::CREATING => 'x+'
+                    self::CREATING => 'x+',
+                    self::EXISTING => 'r+'
                 ],
                 self::TRUNCATING => [
                     self::CURRENT => 'w+',
@@ -104,6 +123,11 @@
                     self::CURRENT => 'x+',
 
                     self::WRITING => 'x+'
+                ],
+                self::EXISTING => [
+                    self::CURRENT => 'r',
+
+                    self::WRITING => 'r+'
                 ]
             ],
 
@@ -115,7 +139,8 @@
 
                     self::TRUNCATING => 'w+',
                     self::APPENDING => 'a+',
-                    self::CREATING => 'x+'
+                    self::CREATING => 'x+',
+                    self::EXISTING => 'r+'
                 ],
                 self::TRUNCATING => [
                     self::CURRENT => 'w',
@@ -131,6 +156,11 @@
                     self::CURRENT => 'x',
 
                     self::READING => 'x+'
+                ],
+                self::EXISTING => [
+                    self::CURRENT => 'r+',
+
+                    self::READING => 'r+'
                 ]
             ]
         ];
@@ -138,9 +168,17 @@
         /**
          * @return Creating
          */
-        public static function creating()
+        public static function mustNotExists()
         {
             return Creating::get(static::$modeVariants[FileMode::CREATING]);
+        }
+
+        /**
+         * @return Existing
+         */
+        public static function mustExists()
+        {
+            return Existing::get(static::$modeVariants[FileMode::EXISTING]);
         }
 
         /**
